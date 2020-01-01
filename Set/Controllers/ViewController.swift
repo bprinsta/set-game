@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 	@IBAction func selectCard(_ sender: UIButton) {
 		if let card = map[sender] {
 			if game.selectedCards.contains(card) {
-				if (!game.threeCardsSelected) {
+				if (!game.isThreeCardsSelected) {
 					game.deselect(card: card)
 				}
 			} else {
@@ -30,6 +30,8 @@ class ViewController: UIViewController {
 			}
 		}
 		updateView()
+		
+		// MARK: Add Game Over Functionality
 	}
 	
 	@IBAction func dealThreeCards(_ sender: UIButton) {
@@ -41,6 +43,8 @@ class ViewController: UIViewController {
 		game = Set()
 		updateView()
 	}
+	
+	// MARK: Add Game Information Button
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -66,8 +70,8 @@ class ViewController: UIViewController {
 			configureCardButtonAttributes(button, card)
 			
 			if game.selectedCards.contains(card) {
-				if game.threeCardsSelected {
-					button.backgroundColor = game.areSelectedCardsASet ? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1) : #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
+				if game.isThreeCardsSelected {
+					button.backgroundColor = game.isSelectedCardsASet ? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1) : #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
 				} else {
 					button.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
 				}
@@ -87,7 +91,7 @@ class ViewController: UIViewController {
 			button.isHidden = true
 		}
 		
-		dealThreeCardsButton.isEnabled = (game.cardsInPlay.count == 24 || game.deck.isEmpty) ? false : true
+		dealThreeCardsButton.isEnabled = (game.cardsInPlay.count == SetGameConstants.maxCardsInPlay || game.deck.isEmpty) ? false : true
 	}
 	
 	private func configureCardButtonAttributes(_ button: UIButton, _ card: Card){
@@ -102,9 +106,9 @@ class ViewController: UIViewController {
 		}
 		
 		switch card.shape {
-		case .optionA: string = "▲"
-		case .optionB: string = "●"
-		case .optionC: string = "■"
+		case .optionA: string = SetGameConstants.triangle
+		case .optionB: string = SetGameConstants.circle
+		case .optionC: string = SetGameConstants.square
 		}
 		
 		switch card.number {

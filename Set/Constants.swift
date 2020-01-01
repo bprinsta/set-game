@@ -7,3 +7,16 @@
 //
 
 import Foundation
+
+enum SetGameConstants {
+	static let deckSize = 81
+	static let maxMatchCount = 27
+	static let maxCardsInPlay = 24
+	
+	static let correctSelection = 3
+	static let wrongSelection = -5
+	
+	static let square = "■"
+	static let triangle = "▲"
+	static let circle = "●"
+}
