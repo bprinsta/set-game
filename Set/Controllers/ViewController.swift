@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 	@IBAction func selectCard(_ sender: UIButton) {
 		if let card = map[sender] {
 			if game.selectedCards.contains(card) {
-				if (!game.isThreeCardsSelected) {
+				if (!game.threeCardsAreSelected) {
 					game.deselect(card: card)
 				}
 			} else {
@@ -70,8 +70,8 @@ class ViewController: UIViewController {
 			configureCardButtonAttributes(button, card)
 			
 			if game.selectedCards.contains(card) {
-				if game.isThreeCardsSelected {
-					button.backgroundColor = game.isSelectedCardsASet ? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1) : #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
+				if game.threeCardsAreSelected {
+					button.backgroundColor = game.selectedCardsAreSet ? #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1) : #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
 				} else {
 					button.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
 				}

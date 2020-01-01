@@ -17,12 +17,12 @@ struct Set {
 	private(set) var matches = 0
 	private(set) var score = 0
 	
-	var isThreeCardsSelected: Bool {
+	var threeCardsAreSelected: Bool {
 		return selectedCards.count == 3
 	}
 	
-	var isSelectedCardsASet: Bool {
-		if isThreeCardsSelected {
+	var selectedCardsAreSet: Bool {
+		if threeCardsAreSelected {
 			return Card.isSet(cards: selectedCards) ? true : false
 		} else {
 			return false
@@ -40,7 +40,7 @@ struct Set {
 	mutating func select(card: Card) {
 		assert(cardsInPlay.contains(card), "Set.select(\(card)): You selected card not in Set.cardsInPlay")
 		
-		if isThreeCardsSelected {
+		if threeCardsAreSelected {
 			if Card.isSet(cards: selectedCards) {
 				for card in selectedCards {
 					if let index = cardsInPlay.firstIndex(of: card) {
