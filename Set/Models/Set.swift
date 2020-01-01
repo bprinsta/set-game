@@ -9,48 +9,78 @@
 import Foundation
 
 struct Set {
-	
 	private(set) var deck = [Card]()
 	private(set) var cardsInPlay = [Card]()
 	private(set) var selectedCards = [Card]()
 	private(set) var matchedCards = [Card]()
-	private(set) var score: Int
+	
+	private(set) var matches = 0
+	private(set) var score = 0
+	
+	var threeCardsSelected: Bool {
+		return selectedCards.count == 3
+	}
+	
+	var areSelectedCardsASet: Bool {
+		if threeCardsSelected {
+			return Card.isSet(cards: selectedCards) ? true : false
+		} else {
+			return false
+		}
+	}
+	
+	var isGameOver: Bool {
+		return matches == 27
+	}
 	
 	mutating func dealThreeCards() {
 		cardsInPlay += deck.removeLast(3)
 	}
 	
-	mutating func selectCard(at index: Int) {
-		assert(index < cardsInPlay.count, "Set.selectCard(\(index)): You selected card index not within Set.cardsInPlay")
-		selectedCards.append(cardsInPlay.remove(at: index))
+	mutating func select(card: Card) {
+		assert(cardsInPlay.contains(card), "Set.select(\(card)): You selected card not in Set.cardsInPlay")
 		
-		if (selectedCards.count == 3) {
-			let isSet = Card.isSet(cards: selectedCards)
-			
-			if (isSet) {
+		if threeCardsSelected {
+			if Card.isSet(cards: selectedCards) {
+				for card in selectedCards {
+					if let index = cardsInPlay.firstIndex(of: card) {
+						cardsInPlay.remove(at: index)
+					}
+				}
+				
 				matchedCards += selectedCards
 				selectedCards.removeAll()
-				dealThreeCards()
+				
+				if !deck.isEmpty {
+					dealThreeCards()
+				}
+				
+				matches += 1
 				score += 3
 			} else {
-				cardsInPlay += selectedCards
 				selectedCards.removeAll()
 				score -= 5
 			}
 		}
+		selectedCards.append(card)
+		print(selectedCards)
 	}
 	
-	mutating func deselectCard(at index: Int) {
-		assert(index < selectedCards.count, "Set.deselectCard(\(index)): You selected card index not within Set.selectedCards")
-		cardsInPlay.append(selectedCards.remove(at: index))
+	mutating func deselect(card: Card) {
+		assert(selectedCards.contains(card), "Set.deselect(\(card)): You selected card not in Set.selectedCards")
+		
+		if let index = selectedCards.firstIndex(of: card) {
+			selectedCards.remove(at: index)
+		}
+		// score -= 1
 	}
 		
 	init() {
-		// Add 81 unique cards to deck
-		for i in 0..<3 {
-			for j in 0..<3 {
-				for k in 0..<3 {
-					for m in 0..<3 {
+		let featureOptions = [Feature.optionA, Feature.optionB, Feature.optionC]
+		for i in featureOptions {
+			for j in featureOptions {
+				for k in featureOptions {
+					for m in featureOptions {
 						let card = Card(number: i, shape: j, color: k, shading: m)
 						deck.append(card)
 					}
@@ -58,10 +88,8 @@ struct Set {
 			}
 		}
 		
-		// Deal 12 Random Cards to Begin Game
 		deck.shuffle()
 		cardsInPlay = deck.removeLast(12)
-		score = 0
 	}
 }
 

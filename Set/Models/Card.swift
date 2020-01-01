@@ -8,60 +8,74 @@
 
 import Foundation
 
-struct Card {
-
-	private(set) var number: Int
-	private(set) var shape: Int
-	private(set) var color: Int
-	private(set) var shading: Int
-
-//	They all have the same number or have three different numbers.
-//	They all have the same shape or have three different shapes.
-//	They all have the same shading or have three different shadings.
-//	They all have the same color or have three different colors.
+struct Card: Equatable {
+	private(set) var number: Feature
+	private(set) var shape: Feature
+	private(set) var color: Feature
+	private(set) var shading: Feature
 	
-	init(number: Int, shape: Int, color: Int, shading: Int){
+	init(number: Feature, shape: Feature, color: Feature, shading: Feature){
 		self.number = number
 		self.shape = shape
 		self.color = color
 		self.shading = shading
 	}
 	
+	static func ==(lhs: Card, rhs: Card) -> Bool {
+		return lhs.number == rhs.number && lhs.shape == rhs.shape && lhs.color == rhs.color && lhs.shading == rhs.shading
+	}
+	
 	static func isSet(cards: [Card]) -> Bool {
 		assert(cards.count == 3, "Card.isSet(\(cards)): A set is composed with three cards")
-		
 		return isSet(first: cards[0], second: cards[1], third: cards[2])
-	}
-	
-	private static func isSet(first: Card, second: Card, third: Card) -> Bool {
-		return isSetOfNums(first: first, second: second, third: third) && isSetOfShapes(first: first, second: second, third: third) && isSetOfColors(first: first, second: second, third: third) && isSetOfShades(first: first, second: second, third: third)
-	}
-	
-	private static func isSetOfNums(first: Card, second: Card, third: Card) -> Bool {
-		return first.number.isEqual(a: second.number, b: third.number) || first.number.isUnique(a: second.number, b: third.number) ? true : false
-	}
-	
-	private static func isSetOfShapes(first: Card, second: Card, third: Card) -> Bool {
-		return first.shape.isEqual(a: second.shape, b: third.shape) || first.shape.isUnique(a: second.shape, b: third.shape) ? true : false
-	}
-
-	private static func isSetOfColors(first: Card, second: Card, third: Card) -> Bool {
-		return first.color.isEqual(a: second.color, b: third.color) || first.color.isUnique(a: second.color, b: third.color) ? true : false
-	}
-	
-	private static func isSetOfShades(first: Card, second: Card, third: Card) -> Bool {
-		return first.shading.isEqual(a: second.shading, b: third.shading) || first.shading.isUnique(a: second.shading, b: third.shading) ? true : false
+		// return true
 	}
 }
 
-extension Int {
-	func isEqual(a: Int, b: Int) -> Bool {
-		return ((self == a) && (self == b))
-	}
+enum Feature: Int, Equatable {
+	case optionA = 0
+	case optionB = 1
+	case optionC = 2
 	
-	func isUnique(a: Int, b: Int) -> Bool {
-		return ((self != a) && (self != b) && (b != a))
+	static func ==(lhs: Feature, rhs: Feature) -> Bool {
+		switch (lhs, rhs) {
+		case (.optionA, .optionA): return true
+		case (.optionB, .optionB): return true
+		case (.optionC, .optionC): return true
+		default: return false
+		}
 	}
 }
+
+// MARK: Extensions
+private extension Card {
+	static func isSet(first: Card, second: Card, third: Card) -> Bool {
+		return isSet(first: first.number, second: second.number, third: third.number) && isSet(first: first.shape, second: second.shape, third: third.shape) && isSet(first: first.color, second: second.color, third: third.color) && isSet(first: first.shading, second: second.shading, third: third.shading)
+	}
+	
+	static func isSet(first: Feature, second: Feature, third: Feature) -> Bool {
+		return Feature.isEqual(a: first, b: second, c: third) || Feature.isUnique(a: first, b: second, c: third)
+	}
+}
+
+extension Card: CustomStringConvertible {
+	var description: String {
+		return "Card(\(number.rawValue), \(shape.rawValue), \(color.rawValue), \(shading.rawValue))"
+	}
+}
+
+extension Feature {
+	// determines if three features are equal
+	static func isEqual(a: Feature, b: Feature, c: Feature) -> Bool {
+		return (c == a) && (c == b)
+	}
+	
+	// determines if three features are unique
+	static func isUnique(a: Feature, b: Feature, c: Feature) -> Bool {
+		return (c != a) && (c != b) && (b != a)
+	}
+}
+
+
 
 
