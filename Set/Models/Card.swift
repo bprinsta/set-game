@@ -59,11 +59,7 @@ extension Card {
 
 private extension Card {
 	static func isSet(first: Card, second: Card, third: Card) -> Bool {
-		return isSet(first.number, second.number, third.number) && isSet(first.shape, second.shape, third.shape) && isSet(first.color, second.color, third.color) && isSet(first.shading, second.shading, third.shading)
-	}
-	
-	static func isSet(_ first: Feature, _ second: Feature, _  third: Feature) -> Bool {
-		return Feature.isEqual(first, second, third) || Feature.isUnique(first, second, third)
+		return Feature.isSet(first.number, second.number, third.number) && Feature.isSet(first.shape, second.shape, third.shape) && Feature.isSet(first.color, second.color, third.color) && Feature.isSet(first.shading, second.shading, third.shading)
 	}
 }
 
@@ -74,6 +70,10 @@ extension Feature {
 	
 	static func isUnique(_ a: Feature, _ b: Feature, _ c: Feature) -> Bool {
 		return (c != a) && (c != b) && (b != a)
+	}
+	
+	static func isSet(_ a: Feature, _ b: Feature, _  c: Feature) -> Bool {
+		return Feature.isEqual(a, b, c) || Feature.isUnique(a, b, c)
 	}
 	
 	// determines third feature needed to complete a set
