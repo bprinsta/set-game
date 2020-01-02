@@ -17,6 +17,7 @@
 		527B620523BA6D8500E55A97 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527B620423BA6D8500E55A97 /* Card.swift */; };
 		527B620E23BAB43300E55A97 /* SetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527B620D23BAB43300E55A97 /* SetTests.swift */; };
 		527B621623BAB49100E55A97 /* CardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527B621523BAB49100E55A97 /* CardTests.swift */; };
+		529D412423BE8A0E0054E133 /* Confetti.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D412323BE8A0E0054E133 /* Confetti.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		527B620D23BAB43300E55A97 /* SetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTests.swift; sourceTree = "<group>"; };
 		527B620F23BAB43300E55A97 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		527B621523BAB49100E55A97 /* CardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTests.swift; sourceTree = "<group>"; };
+		529D412323BE8A0E0054E133 /* Confetti.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Confetti.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 		526CEA1F23BC4BA500D8935E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				529D412323BE8A0E0054E133 /* Confetti.swift */,
 				523C8ED023B00BEC00C2BF54 /* Main.storyboard */,
 				523C8ED523B00BEE00C2BF54 /* LaunchScreen.storyboard */,
 			);
@@ -235,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				526CEA1D23BC4B8B00D8935E /* Constants.swift in Sources */,
+				529D412423BE8A0E0054E133 /* Confetti.swift in Sources */,
 				523C8ECF23B00BEC00C2BF54 /* ViewController.swift in Sources */,
 				523C8ECD23B00BEC00C2BF54 /* AppDelegate.swift in Sources */,
 				523C8EDF23B0189000C2BF54 /* Set.swift in Sources */,

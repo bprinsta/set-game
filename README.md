@@ -1,6 +1,6 @@
 # Set Game
 
-This app allows you to play the card game "Set", on your iOS Device. (Describe set game here) The project was initially developed for Stanford's CS193p course (Developing iOS Apps with Swift). I've since added a hint button, confetti animations, and an info/rules button to increase the game's playability.
+This app allows you to play the card game <a href="https://en.wikipedia.org/wiki/Set_(card_game)">Set</a>, on your iOS Device. The project was initially developed for Stanford's CS193p course (Developing iOS Apps with Swift). I've since added a hint button, confetti animations, and a game rules button to increase the game's playability.
 
 # Game Screenshots
 <img src="https://user-images.githubusercontent.com/28976325/71538580-8dda0780-28fb-11ea-8d13-f3c7993991dd.jpeg"

@@ -28,14 +28,15 @@ class ViewController: UIViewController {
 	}
 	
 	@IBAction func touchCard(_ sender: UIButton) {
-		if game.isGameOver {
-			congratulatePlayer()
-		}
-		
 		if let card = map[sender] {
 			game.choose(card)
 		}
 		updateView()
+		
+		if game.isGameOver {
+			createParticles(view)
+			congratulatePlayer()
+		}
 	}
 	
 	@IBAction func dealThreeCards(_ sender: UIButton) {
@@ -60,6 +61,7 @@ class ViewController: UIViewController {
 	}
 	
 	private func newGame() {
+		removeParticles(view)
 		game = Set()
 		updateView()
 	}
