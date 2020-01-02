@@ -8,11 +8,11 @@
 
 import Foundation
 
+// MARK: Something is wrong with the game right now making it unbeatable
 struct Set {
 	private(set) var deck = [Card]()
-	private(set) var cardsInPlay = [Card]()
+	private(set) var cardsInPlay = [Card?]()
 	private(set) var selectedCards = [Card]()
-	private(set) var matchedCards = [Card]()
 	
 	private(set) var matches = 0
 	private(set) var score = 0
@@ -30,57 +30,61 @@ struct Set {
 	}
 	
 	var isGameOver: Bool {
-		return matches == SetGameConstants.maxMatchCount
+		// game is over when there are no more matches to be made
+		return deck.isEmpty && findSet() == nil
 	}
 	
-	mutating func dealThreeCards() {
-		cardsInPlay += deck.removeLast(3)
+	mutating func deal(_ count: Int) {
+		cardsInPlay += deck.removeLast(count)
 	}
 	
-	mutating func select(card: Card) {
-		assert(cardsInPlay.contains(card), "Set.select(\(card)): You selected card not in Set.cardsInPlay")
-		
+	mutating func choose(_ card: Card) {
+		assert(cardsInPlay.contains(card), "Set.choose(\(card)): You selected a card not in Set.cardsInPlay")
+				
+		if selectedCards.contains(card) {
+			if (!threeCardsAreSelected) {
+				deselect(card)
+			}
+		} else {
+			select(card)
+		}
+	}
+	
+	mutating func hintCards() -> [Card]? {
+		score -= 10
+		return findSet()
+	}
+	
+	private mutating func select(_ card: Card) {
 		if threeCardsAreSelected {
 			if Card.isSet(cards: selectedCards) {
 				for card in selectedCards {
 					if let index = cardsInPlay.firstIndex(of: card) {
-						cardsInPlay.remove(at: index)
+						cardsInPlay[index] = !deck.isEmpty ? deck.removeLast() : nil
 					}
-				}
-				
-				matchedCards += selectedCards
-				selectedCards.removeAll()
-				
-				if !deck.isEmpty {
-					dealThreeCards()
 				}
 				
 				matches += 1
 				score += SetGameConstants.correctSelection
 			} else {
-				selectedCards.removeAll()
 				score += SetGameConstants.wrongSelection
 			}
+			selectedCards.removeAll()
 		}
 		selectedCards.append(card)
-		print(selectedCards)
 	}
 	
-	mutating func deselect(card: Card) {
-		assert(selectedCards.contains(card), "Set.deselect(\(card)): You selected card not in Set.selectedCards")
-		
+	private mutating func deselect(_ card: Card) {
 		if let index = selectedCards.firstIndex(of: card) {
 			selectedCards.remove(at: index)
 		}
-		// score -= 1
 	}
 		
 	init() {
-		let featureOptions = [Feature.optionA, Feature.optionB, Feature.optionC]
-		for i in featureOptions {
-			for j in featureOptions {
-				for k in featureOptions {
-					for m in featureOptions {
+		for i in Feature.allFeatures {
+			for j in Feature.allFeatures {
+				for k in Feature.allFeatures {
+					for m in Feature.allFeatures {
 						let card = Card(number: i, shape: j, color: k, shading: m)
 						deck.append(card)
 					}
@@ -89,7 +93,7 @@ struct Set {
 		}
 		
 		deck.shuffle()
-		cardsInPlay = deck.removeLast(12)
+		deal(12)
 	}
 }
 
@@ -102,5 +106,32 @@ extension Array {
 			removedElements.append(self.removeLast())
 		}
 		return removedElements
+	}
+}
+
+extension Set {
+	func findSet() -> [Card]? {
+		for cardA in cardsInPlay {
+			for cardB in cardsInPlay {
+				if let cardA = cardA, let cardB = cardB{
+					if cardA != cardB {
+						let cardC = complementCard(for: cardA, for: cardB)
+						if (cardsInPlay.contains(cardC)) {
+							return [cardA, cardB, cardC]
+						}
+					}
+				}
+			}
+		}
+		return nil
+	}
+	
+	func complementCard(for cardA: Card, for cardB: Card) -> Card {
+		let number = cardA.number == cardB.number ? cardA.number : Feature.complementFeature(for: cardA.number, for: cardB.number)
+		let color = cardA.color == cardB.color ? cardA.color : Feature.complementFeature(for: cardA.color, for: cardB.color)
+		let shape = cardA.shape == cardB.shape ? cardA.shape : Feature.complementFeature(for: cardA.shape, for: cardB.shape)
+		let shade = cardA.shading == cardB.shading ? cardA.shading : Feature.complementFeature(for: cardA.shading, for: cardB.shading)
+		
+		return Card(number: number, shape: shape, color: color, shading: shade)
 	}
 }
