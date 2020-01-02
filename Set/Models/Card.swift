@@ -8,18 +8,19 @@
 
 import Foundation
 
-struct Card: Hashable {
-	private(set) var number: Feature
-	private(set) var shape: Feature
-	private(set) var color: Feature
-	private(set) var shading: Feature
+enum Feature: Int {
+	case optionA = 0
+	case optionB = 1
+	case optionC = 2
 	
-	init(number: Feature, shape: Feature, color: Feature, shading: Feature){
-		self.number = number
-		self.shape = shape
-		self.color = color
-		self.shading = shading
-	}
+	static let allFeatures = [Feature.optionA, Feature.optionB, Feature.optionC]
+}
+
+struct Card: Hashable {
+	let number: Feature
+	let shape: Feature
+	let color: Feature
+	let shading: Feature
 	
 	static func ==(lhs: Card, rhs: Card) -> Bool {
 		return lhs.number == rhs.number && lhs.shape == rhs.shape && lhs.color == rhs.color && lhs.shading == rhs.shading
@@ -38,15 +39,24 @@ struct Card: Hashable {
 	}
 }
 
-enum Feature: Int {
-	case optionA = 0
-	case optionB = 1
-	case optionC = 2
-	
-	static let allFeatures = [Feature.optionA, Feature.optionB, Feature.optionC]
+// MARK: Extensions
+extension Card: CustomStringConvertible {
+	var description: String {
+		return "Card(num: \(number.rawValue), shape: \(shape.rawValue), color: \(color.rawValue), shade: \(shading.rawValue))"
+	}
 }
 
-// MARK: Extensions
+extension Card {
+	static func complementCard(for cardA: Card, for cardB: Card) -> Card {
+		let number = cardA.number == cardB.number ? cardA.number : Feature.complementFeature(for: cardA.number, for: cardB.number)
+		let color = cardA.color == cardB.color ? cardA.color : Feature.complementFeature(for: cardA.color, for: cardB.color)
+		let shape = cardA.shape == cardB.shape ? cardA.shape : Feature.complementFeature(for: cardA.shape, for: cardB.shape)
+		let shade = cardA.shading == cardB.shading ? cardA.shading : Feature.complementFeature(for: cardA.shading, for: cardB.shading)
+		
+		return Card(number: number, shape: shape, color: color, shading: shade)
+	}
+}
+
 private extension Card {
 	static func isSet(first: Card, second: Card, third: Card) -> Bool {
 		return isSet(first.number, second.number, third.number) && isSet(first.shape, second.shape, third.shape) && isSet(first.color, second.color, third.color) && isSet(first.shading, second.shading, third.shading)
@@ -54,12 +64,6 @@ private extension Card {
 	
 	static func isSet(_ first: Feature, _ second: Feature, _  third: Feature) -> Bool {
 		return Feature.isEqual(first, second, third) || Feature.isUnique(first, second, third)
-	}
-}
-
-extension Card: CustomStringConvertible {
-	var description: String {
-		return "Card(num: \(number.rawValue), shape: \(shape.rawValue), color: \(color.rawValue), shade: \(shading.rawValue))"
 	}
 }
 

@@ -8,12 +8,10 @@
 
 import Foundation
 
-// MARK: Something is wrong with the game right now making it unbeatable
 struct Set {
 	private(set) var deck = [Card]()
 	private(set) var cardsInPlay = [Card?]()
 	private(set) var selectedCards = [Card]()
-	
 	private(set) var matches = 0
 	private(set) var score = 0
 	
@@ -109,13 +107,13 @@ extension Array {
 	}
 }
 
-extension Set {
+private extension Set {
 	func findSet() -> [Card]? {
 		for cardA in cardsInPlay {
 			for cardB in cardsInPlay {
 				if let cardA = cardA, let cardB = cardB{
 					if cardA != cardB {
-						let cardC = complementCard(for: cardA, for: cardB)
+						let cardC = Card.complementCard(for: cardA, for: cardB)
 						if (cardsInPlay.contains(cardC)) {
 							return [cardA, cardB, cardC]
 						}
@@ -124,14 +122,5 @@ extension Set {
 			}
 		}
 		return nil
-	}
-	
-	func complementCard(for cardA: Card, for cardB: Card) -> Card {
-		let number = cardA.number == cardB.number ? cardA.number : Feature.complementFeature(for: cardA.number, for: cardB.number)
-		let color = cardA.color == cardB.color ? cardA.color : Feature.complementFeature(for: cardA.color, for: cardB.color)
-		let shape = cardA.shape == cardB.shape ? cardA.shape : Feature.complementFeature(for: cardA.shape, for: cardB.shape)
-		let shade = cardA.shading == cardB.shading ? cardA.shading : Feature.complementFeature(for: cardA.shading, for: cardB.shading)
-		
-		return Card(number: number, shape: shape, color: color, shading: shade)
 	}
 }
