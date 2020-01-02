@@ -32,10 +32,6 @@ struct Set {
 		return deck.isEmpty && findSet() == nil
 	}
 	
-	mutating func deal(_ count: Int) {
-		cardsInPlay += deck.removeLast(count)
-	}
-	
 	mutating func choose(_ card: Card) {
 		assert(cardsInPlay.contains(card), "Set.choose(\(card)): You selected a card not in Set.cardsInPlay")
 				
@@ -48,26 +44,27 @@ struct Set {
 		}
 	}
 	
+	mutating func dealThreeCards() {
+		Card.isSet(cards: selectedCards) ? replaceCardsInPlay() : deal(3)
+	}
+	
 	mutating func hintCards() -> [Card]? {
-		score -= 10
+		// score -= 10
 		return findSet()
+	}
+	
+	private mutating func deal(_ count: Int) {
+		cardsInPlay += deck.removeLast(count)
 	}
 	
 	private mutating func select(_ card: Card) {
 		if threeCardsAreSelected {
 			if Card.isSet(cards: selectedCards) {
-				for card in selectedCards {
-					if let index = cardsInPlay.firstIndex(of: card) {
-						cardsInPlay[index] = !deck.isEmpty ? deck.removeLast() : nil
-					}
-				}
-				
-				matches += 1
-				score += SetGameConstants.correctSelection
+				replaceCardsInPlay()
 			} else {
 				score += SetGameConstants.wrongSelection
+				selectedCards.removeAll()
 			}
-			selectedCards.removeAll()
 		}
 		selectedCards.append(card)
 	}
@@ -76,6 +73,18 @@ struct Set {
 		if let index = selectedCards.firstIndex(of: card) {
 			selectedCards.remove(at: index)
 		}
+	}
+	
+	private mutating func replaceCardsInPlay() {
+		for card in selectedCards {
+			if let index = cardsInPlay.firstIndex(of: card) {
+				cardsInPlay[index] = !deck.isEmpty ? deck.removeLast() : nil
+			}
+		}
+		
+		matches += 1
+		score += SetGameConstants.correctSelection
+		selectedCards.removeAll()
 	}
 		
 	init() {

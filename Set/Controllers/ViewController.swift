@@ -39,7 +39,7 @@ class ViewController: UIViewController {
 	}
 	
 	@IBAction func dealThreeCards(_ sender: UIButton) {
-		game.deal(3)
+		game.dealThreeCards()
 		updateView()
 	}
 	

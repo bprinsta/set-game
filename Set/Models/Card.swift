@@ -34,8 +34,7 @@ struct Card: Hashable {
     }
 	
 	static func isSet(cards: [Card]) -> Bool {
-		assert(cards.count == 3, "Card.isSet(\(cards)): A set is composed with three cards")
-		return isSet(first: cards[0], second: cards[1], third: cards[2])
+		return cards.count != 3 ? false : isSet(first: cards[0], second: cards[1], third: cards[2])
 	}
 }
 
