@@ -14,7 +14,7 @@ This app allows you to play the card game <a href="https://en.wikipedia.org/wiki
 - Extension
 - Enum
 - NSAttributedString
-- CustomStringConvertible Protocol 
+- CustomStringConvertible
 - Computed Properties
 - CGLayer Properties (borderWidth, borderColor, cornerRadius)
 

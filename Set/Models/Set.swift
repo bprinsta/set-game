@@ -28,7 +28,6 @@ struct Set {
 	}
 	
 	var isGameOver: Bool {
-		// game is over when there are no more matches to be made
 		return deck.isEmpty && findSet() == nil
 	}
 	
@@ -49,7 +48,7 @@ struct Set {
 	}
 	
 	mutating func hintCards() -> [Card]? {
-		// score -= 10
+		score += SetGameConstants.usedHint
 		return findSet()
 	}
 	

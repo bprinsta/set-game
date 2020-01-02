@@ -58,6 +58,7 @@ class ViewController: UIViewController {
 		} else {
 			print("No solution right now")
 		}
+		updateScore()
 	}
 	
 	private func newGame() {
@@ -80,8 +81,8 @@ class ViewController: UIViewController {
 	// MARK: Add Game Information Button
 	
 	private func updateView() {
-		score.text = "Score: \(game.score)"
-		matchedCountLabel.text = "Matches: \(game.matches)"
+		updateScore()
+		updateMatches()
 		
 		for index in cardButtons.indices {
 			let button = cardButtons[index]
@@ -177,6 +178,14 @@ class ViewController: UIViewController {
 			button.layer.cornerRadius = 8.0
 		}
 		dealThreeCardsButton.layer.cornerRadius = 8.0
+	}
+	
+	private func updateScore() {
+		score.text = "Score: \(game.score)"
+	}
+	
+	private func updateMatches() {
+		matchedCountLabel.text = "Matches: \(game.matches)"
 	}
 }
 
