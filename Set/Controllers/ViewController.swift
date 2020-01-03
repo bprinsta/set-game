@@ -16,9 +16,9 @@ class ViewController: UIViewController {
 	
 	@IBOutlet private(set) var cardButtons: [UIButton]!
 	@IBOutlet private weak var dealCardsButton: UIButton!
-	@IBOutlet private(set) var newGameButton: UIButton!
-	@IBOutlet private(set) var score: UILabel!
-	@IBOutlet private(set) var matchedCountLabel: UILabel!
+	@IBOutlet private weak var newGameButton: UIButton!
+	@IBOutlet private weak var score: UILabel!
+	@IBOutlet private weak var matchedCountLabel: UILabel!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -88,9 +88,7 @@ class ViewController: UIViewController {
 		
 		 self.present(alertController, animated: true, completion: nil)
 	}
-	
-	// MARK: Add Game Information Button
-	
+		
 	private func updateView() {
 		updateScore()
 		updateMatches()

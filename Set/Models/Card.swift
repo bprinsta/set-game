@@ -77,7 +77,7 @@ extension Feature {
 	
 	// determines third feature needed to complete a set
 	static func complementFeature(for a: Feature, for b: Feature) -> Feature {
-		if (a == .optionA && b == .optionB) || (b == .optionA && a == .optionB){
+		if (a == .optionA && b == .optionB) || (b == .optionA && a == .optionB) {
 			return .optionC
 		} else if (a == .optionB && b == .optionC) || ( a == .optionC && b == .optionB) {
 			return .optionA
