@@ -412,7 +412,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="dealThreeCardsButton" destination="EkR-oB-YK9" id="4Np-fL-exe"/>
+                        <outlet property="dealCardsButton" destination="EkR-oB-YK9" id="4Np-fL-exe"/>
                         <outlet property="matchedCountLabel" destination="5af-c1-24Y" id="Nmx-Kn-RWv"/>
                         <outlet property="newGameButton" destination="jFe-Yf-bly" id="ub9-ty-sF1"/>
                         <outlet property="score" destination="HRV-46-Y6x" id="6CU-zI-n4c"/>

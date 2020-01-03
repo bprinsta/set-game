@@ -15,7 +15,7 @@ class ViewController: UIViewController {
 	private var attributedStrings = [Card: NSAttributedString]()
 	
 	@IBOutlet private(set) var cardButtons: [UIButton]!
-	@IBOutlet private weak var dealThreeCardsButton: UIButton!
+	@IBOutlet private weak var dealCardsButton: UIButton!
 	@IBOutlet private(set) var newGameButton: UIButton!
 	@IBOutlet private(set) var score: UILabel!
 	@IBOutlet private(set) var matchedCountLabel: UILabel!
@@ -106,7 +106,8 @@ class ViewController: UIViewController {
 			}
 		}
 		
-		dealThreeCardsButton.isEnabled = (game.cardsInPlay.count == SetGameConstants.maxCardsInPlay || game.deck.isEmpty) ? false : true
+		configureDealButton()
+		
 	}
 	
 	private func mapAttributedStrings(){
@@ -143,6 +144,16 @@ class ViewController: UIViewController {
 				attributes[NSAttributedString.Key.strokeColor] = color
 				attributedStrings[card] = NSAttributedString(string: string, attributes: attributes)
 			}
+		}
+	}
+	
+	private func configureDealButton() {
+		if game.deck.isEmpty {
+			dealCardsButton.isEnabled = false
+		} else if game.cardsInPlay.count == SetGameConstants.maxCardsInPlay {
+			dealCardsButton.isEnabled = game.selectedCardsAreSet
+		} else {
+			dealCardsButton.isEnabled = true
 		}
 	}
 	
@@ -184,7 +195,7 @@ class ViewController: UIViewController {
 		for button in cardButtons {
 			button.layer.cornerRadius = 8.0
 		}
-		dealThreeCardsButton.layer.cornerRadius = 8.0
+		dealCardsButton.layer.cornerRadius = 8.0
 	}
 	
 	private func updateScore() {
