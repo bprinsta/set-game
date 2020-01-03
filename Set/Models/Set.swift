@@ -48,7 +48,7 @@ struct Set {
 	}
 	
 	mutating func hintCards() -> [Card]? {
-		score += SetGameConstants.usedHint
+		score -= SetGameConstants.usedHint
 		return findSet()
 	}
 	
@@ -61,7 +61,7 @@ struct Set {
 			if Card.isSet(cards: selectedCards) {
 				replaceCardsInPlay()
 			} else {
-				score += SetGameConstants.wrongSelection
+				score -= SetGameConstants.wrongSelection
 				selectedCards.removeAll()
 			}
 		}

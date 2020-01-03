@@ -11,4 +11,15 @@ import XCTest
 
 class SetTests: XCTestCase {
 	
+	func testChoose() {
+		
+	}
+	
+	func testDealThreeCards() {
+		
+	}
+	
+	func testHintCards() {
+		
+	}
 }

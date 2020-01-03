@@ -61,6 +61,14 @@ class ViewController: UIViewController {
 		updateScore()
 	}
 	
+	@IBAction private func presentGameRules(_ sender: UIButton) {
+		let alertController = UIAlertController(title: "How To Play", message:
+			"A SET consists of 3 cards in which each of the cards’ features (shape, color, number & shading), looked at one-by-one, are the same on each card, or, are different on each card. All of the features must separately satisfy this rule. \n \n A QUICK CHECK: If 2 cards are the same and 1 card is different for any feature, then it is not a SET \n \n The point of the game is to identify as many sets as you can! Score \(SetGameConstants.correctSelection) points for correct selections and lose \(SetGameConstants.wrongSelection) points for wrong selections. If you’re struggling you can press the hint button, but you’ll lose \(SetGameConstants.usedHint) points. \n \n Good luck :)", preferredStyle: .alert)
+		alertController.addAction(UIAlertAction(title: "Play", style: .default))
+		
+		self.present(alertController, animated: true, completion: nil)
+	}
+	
 	private func newGame() {
 		removeParticles(view)
 		game = Set()

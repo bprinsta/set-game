@@ -10,5 +10,16 @@ import XCTest
 @testable import Set
 
 class CardTests: XCTestCase {
-
+	
+	func testEquals() {
+		
+	}
+	
+	func testIsSet() {
+		
+	}
+	
+	func testComplimentCard() {
+		
+	}
 }
