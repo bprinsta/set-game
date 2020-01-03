@@ -27,6 +27,10 @@ class ViewController: UIViewController {
 		updateView()
 	}
 	
+	override var preferredStatusBarStyle: UIStatusBarStyle {
+		return .lightContent
+	}
+	
 	@IBAction func touchCard(_ sender: UIButton) {
 		if let card = map[sender] {
 			game.choose(card)
