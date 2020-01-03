@@ -92,24 +92,22 @@ class ViewController: UIViewController {
 	private func updateView() {
 		updateScore()
 		updateMatches()
+		configureDealButton()
 		
 		for index in cardButtons.indices {
 			let button = cardButtons[index]
 			unhighlightButton(button)
 			
 			if index >= game.cardsInPlay.count {
-				hideCardButton(button)
+				hideButton(button)
 			} else if let card = game.cardsInPlay[index] {
-				showCardButton(button)
+				showButton(button)
 				configureCardButton(button, card)
 				map[button] = card
 			} else {
-				hideCardButton(button)
+				hideButton(button)
 			}
 		}
-		
-		configureDealButton()
-		
 	}
 	
 	private func mapAttributedStrings(){
@@ -151,11 +149,11 @@ class ViewController: UIViewController {
 	
 	private func configureDealButton() {
 		if game.deck.isEmpty {
-			dealCardsButton.isEnabled = false
+			hideButton(dealCardsButton)
 		} else if game.cardsInPlay.count == SetGameConstants.maxCardsInPlay {
-			dealCardsButton.isEnabled = game.selectedCardsAreSet
+			game.selectedCardsAreSet ? showButton(dealCardsButton) : hideButton(dealCardsButton)
 		} else {
-			dealCardsButton.isEnabled = true
+			showButton(dealCardsButton)
 		}
 	}
 	
@@ -173,12 +171,12 @@ class ViewController: UIViewController {
 		}
 	}
 	
-	private func showCardButton(_ button: UIButton) {
+	private func showButton(_ button: UIButton) {
 		button.alpha = 1
 		button.isEnabled = true
 	}
 	
-	private func hideCardButton(_ button: UIButton) {
+	private func hideButton(_ button: UIButton) {
 		button.alpha = 0
 		button.isEnabled = false
 	}

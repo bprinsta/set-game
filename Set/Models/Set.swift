@@ -28,7 +28,7 @@ struct Set {
 	}
 	
 	var isGameOver: Bool {
-		return deck.isEmpty && findSet() == nil
+		return (deck.isEmpty && findSet() == nil) || (matches == SetGameConstants.maxMatchCount)
 	}
 	
 	mutating func choose(_ card: Card) {
