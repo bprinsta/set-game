@@ -75,7 +75,6 @@ class ViewController: UIViewController {
 		updateView()
 	}
 	
-	// we never get here because player selecting one card prompts next loop
 	private func congratulatePlayer() {
 		let alertController = UIAlertController(title: "Congratulations!", message:
 			"You found \(game.matches) sets and finished the game with a score of \(game.score)!", preferredStyle: .alert)

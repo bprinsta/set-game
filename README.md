@@ -11,8 +11,8 @@ This app allows you to play the card game <a href="https://en.wikipedia.org/wiki
 
 # Concepts Learned Through Project
 - MVC Architecture
-- Extension
-- Enum
+- Extensions
+- Enums
 - NSAttributedString
 - CustomStringConvertible
 - Computed Properties

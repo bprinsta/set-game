@@ -44,7 +44,7 @@ struct Set {
 	}
 	
 	mutating func dealThreeCards() {
-		Card.isSet(cards: selectedCards) ? replaceCardsInPlay() : deal(3)
+		Card.isSet(cards: selectedCards) ? replaceCardsInPlay() : deal(numOfCards: 3)
 	}
 	
 	mutating func hintCards() -> [Card]? {
@@ -52,7 +52,7 @@ struct Set {
 		return findSet()
 	}
 	
-	private mutating func deal(_ count: Int) {
+	private mutating func deal(numOfCards count: Int) {
 		cardsInPlay += deck.removeLast(count)
 	}
 	
@@ -99,7 +99,7 @@ struct Set {
 		}
 		
 		deck.shuffle()
-		deal(12)
+		deal(numOfCards: 12)
 	}
 }
 
@@ -119,7 +119,7 @@ private extension Set {
 	func findSet() -> [Card]? {
 		for cardA in cardsInPlay {
 			for cardB in cardsInPlay {
-				if let cardA = cardA, let cardB = cardB{
+				if let cardA = cardA, let cardB = cardB {
 					if cardA != cardB {
 						let cardC = Card.complementCard(for: cardA, for: cardB)
 						if (cardsInPlay.contains(cardC)) {
