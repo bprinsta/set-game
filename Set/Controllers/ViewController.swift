@@ -60,6 +60,11 @@ class ViewController: UIViewController {
 				}
 			}
 		} else {
+			let alertController = UIAlertController(title: "No Sets In Play", message:
+			"There are currently no sets on the board", preferredStyle: .alert)
+			alertController.addAction(UIAlertAction(title: "Continue", style: .default))
+			self.present(alertController, animated: true, completion: nil)
+			
 			print("No solution right now")
 		}
 		updateScore()
