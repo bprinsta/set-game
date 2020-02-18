@@ -13,9 +13,10 @@ enum SetGameConstants {
 	static let maxMatchCount = 27
 	static let maxCardsInPlay = 24
 	
-	static let correctSelection = 40
-	static let wrongSelection = 60
-	static let usedHint = 90
+	static let correctSelection = 50
+	static let wrongSelection = 75
+	static let usedHint = 125
+	static let uneededDealCards = 100
 	
 	static let square = "■"
 	static let triangle = "▲"
